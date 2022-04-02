@@ -8,16 +8,15 @@ namespace Umt
 {
     class Program
     {
-        //public static void StrongPassword(string password);
 
         //Limita inferioara si superioara pentru lungimea parolei
         private const int MinLength = 6;
-        private const int MaxLength = 9;
+        private const int MaxLength = 20;
 
         public static void StrongPasswordChecker(string password)
         {
 
-            int changes = 0; 
+            int changes = 0;
 
             int[] ok = new int[3];
 
@@ -30,21 +29,22 @@ namespace Umt
             }
 
             //In urmatoarea secventa de cod, se verifica daca parola introdusa contine grupuri  de caractere  identice consecutive de lungime strict egala 3
-            // si totodata, se verifica daca parola contine litera mica, litera mare si cifra, folosindu-ne de vectorul "ok". Daca suma elementelor din vectorul
-            // "ok" este 3, atunci parola le contine pe toate 3, iar daca suma elementelor din vectsor este diferita de 3, parolei ii lipsesc una sau mai multe
-            // caractere impuse (litera mica/litera mare/cifra).
+            // si totodata, se verifica daca parola contine litera mica, litera mare si cifra, folosindu-ne de vectorul "ok".Se vor numara cate elemente din vector
+            // sunt egale cu 0 (ceea ce semnifica lipsa unui simbol dintre cele impuse).Daca vectorul contine doar elemente egale cu 1,
+            //atunci parola contine toate 3 simbolurile.In caz contrar, parolei ii lipsesc una, mai multe sau toate
+            // caracterele impuse (litera mica/litera mare/cifra).
             char? stored = null;
             int occurrenceCounter = 0;
             int replacementsNeeded = 0;
             for (int i = 0; i < password.Length; i++)
             {
-                if(stored!=password[i])
+                if (stored != password[i])
                 {
                     stored = password[i];
                     occurrenceCounter = 0;
                 }
                 occurrenceCounter++;
-                if(occurrenceCounter==2)
+                if (occurrenceCounter == 2)
                 {
                     replacementsNeeded++;
                     occurrenceCounter = 0;
@@ -76,10 +76,11 @@ namespace Umt
             // Putem garanta ca schimbarile de simboluri se pot inlocui in replacementsNeeded. Concret, daca vom avea in parola nevoie atat de schimari de caractere
             //(litera mica/litera mare/cifra), cat si schimari de grupuri, un caracter lipsa poate fi inlocuit intr-un grup de 3 caractere indentice consecutive.
             //In cazul in care nu avem niciun grup de caractere identice consecutiv, se vor lua in calcul doar schimbarile necesare pentru simboluri.
-            int missingSymbols=ok.Count(x => x == 0);
-            int symbolChanges = missingSymbols - replacementsNeeded;  
+            int missingSymbols = ok.Count(x => x == 0);
+            int symbolChanges = missingSymbols - replacementsNeeded;
 
-            // 
+            // Tinem cont ca fiecare grup de 3 caractere consecutive necesita inevitabil cate o schimbare. Adaugam replacementNeeded la maximul dintre nr. de schimbari
+            //necesare in cazul in care lungimea parolei nu respecta limita inferioara si nr. de shimbari necesare pentru simboluri,calculat anterior.
             changes += Math.Max(minLengthAdjustment, symbolChanges) + replacementsNeeded;
 
             Console.WriteLine(changes);
@@ -94,7 +95,7 @@ namespace Umt
         static void TestPassword()
         {
             string password = Console.ReadLine();
-            if(password == "Stop")
+            if (password == "Stop")
             {
                 return;
             }
