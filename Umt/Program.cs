@@ -31,7 +31,7 @@ namespace Umt
 
             //In urmatoarea secventa de cod, se verifica daca parola introdusa contine grupuri  de caractere  identice consecutive de lungime strict egala 3
             // si totodata, se verifica daca parola contine litera mica, litera mare si cifra, folosindu-ne de vectorul "ok". Daca suma elementelor din vectorul
-            // "ok" este 3, atunci parola le contine pe toate 3, iar daca suma elementelor din vector este diferita de 3, parolei ii lipsesc una sau mai multe
+            // "ok" este 3, atunci parola le contine pe toate 3, iar daca suma elementelor din vectsor este diferita de 3, parolei ii lipsesc una sau mai multe
             // caractere impuse (litera mica/litera mare/cifra).
             char? stored = null;
             int occurrenceCounter = 0;
